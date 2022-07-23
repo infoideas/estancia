@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 31 oct. 2021 16:10:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.MesaComprobante" table="mesa_comprobante" catalog="food" optimistic-lock="version">
+        <comment>Comprobantes por mesa</comment>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="formaPago" class="entidades.FormaPago" fetch="select">
+            <column name="idFormaPago" not-null="true">
+                <comment>Forma de pago</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="mesa" class="entidades.Mesa" fetch="select">
+            <column name="idMesa" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tarjeta" class="entidades.Tarjeta" fetch="select">
+            <column name="idTarjeta">
+                <comment>Tarjeta</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="tipoFactura" class="entidades.TipoFactura" fetch="select">
+            <column name="idTipoFactura">
+                <comment>Tipo de factura</comment>
+            </column>
+        </many-to-one>
+        <property name="tipoComprobante" type="char">
+            <column name="tipoComprobante" length="1" not-null="true">
+                <comment>Venta: V/Factura: F</comment>
+            </column>
+        </property>
+        <property name="valor" type="big_decimal">
+            <column name="valor" precision="20" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

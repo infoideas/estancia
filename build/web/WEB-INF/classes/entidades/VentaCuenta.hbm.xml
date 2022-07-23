@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 31 oct. 2021 16:10:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.VentaCuenta" table="venta_cuenta" catalog="food" optimistic-lock="version">
+        <comment>Cuenta de la venta</comment>
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="formaPago" class="entidades.FormaPago" fetch="select">
+            <column name="idFormaPago" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tarjeta" class="entidades.Tarjeta" fetch="select">
+            <column name="idTarjeta">
+                <comment>Tarjeta de cr&#233;dito o d&#233;bito</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="venta" class="entidades.Venta" fetch="select">
+            <column name="idVenta" not-null="true" />
+        </many-to-one>
+        <property name="numTarjeta" type="string">
+            <column name="num_tarjeta" length="30">
+                <comment>N&#250;mero de tarjeta</comment>
+            </column>
+        </property>
+        <property name="fecVenc" type="timestamp">
+            <column name="fec_venc" length="19" not-null="true">
+                <comment>Fecha de vencimiento</comment>
+            </column>
+        </property>
+        <property name="fecPago" type="timestamp">
+            <column name="fec_pago" length="19">
+                <comment>Fecha de pago</comment>
+            </column>
+        </property>
+        <property name="valor" type="big_decimal">
+            <column name="valor" precision="20" not-null="true">
+                <comment>Valor</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

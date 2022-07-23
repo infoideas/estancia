@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 31 oct. 2021 16:10:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.MenuEjecDet" table="menu_ejec_det" catalog="food" optimistic-lock="version">
+        <comment>Detalle del men&#250; ejecutivo</comment>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="categoriaMe" class="entidades.CategoriaMe" fetch="select">
+            <column name="idCategoria" not-null="true">
+                <comment>Categor&#237;a del producto dentro del men&#250;</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="menuEjec" class="entidades.MenuEjec" fetch="select">
+            <column name="idMenuEjec" not-null="true">
+                <comment>Men&#250; ejecutivo del que forma parte</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="producto" class="entidades.Producto" fetch="select">
+            <column name="idProducto" not-null="true">
+                <comment>Producto</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="unidadMedida" class="entidades.UnidadMedida" fetch="select">
+            <column name="idUnidad" not-null="true">
+                <comment>Unidad de medida</comment>
+            </column>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

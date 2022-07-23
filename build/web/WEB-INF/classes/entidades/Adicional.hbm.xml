@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 31 oct. 2021 16:10:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.Adicional" table="adicional" catalog="food" optimistic-lock="version">
+        <comment>Adicionales de producto por rubro</comment>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="rubro" class="entidades.Rubro" fetch="select">
+            <column name="idRubro" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" not-null="true" />
+        </property>
+        <property name="precio" type="big_decimal">
+            <column name="precio" precision="20" not-null="true" />
+        </property>
+        <set name="mesaDetAdicionals" table="mesa_det_adicional" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idAdicional" not-null="true" />
+            </key>
+            <one-to-many class="entidades.MesaDetAdicional" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 31 oct. 2021 16:10:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.MesaDetPreferencia" table="mesa_det_preferencia" catalog="food" optimistic-lock="version">
+        <comment>Preferencias del producto pedido</comment>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="mesaDet" class="entidades.MesaDet" fetch="select">
+            <column name="idMesaDet" not-null="true" />
+        </many-to-one>
+        <many-to-one name="preferencia" class="entidades.Preferencia" fetch="select">
+            <column name="idPreferencia" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

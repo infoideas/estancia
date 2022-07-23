@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 31 oct. 2021 16:10:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.Sector" table="sector" catalog="food" optimistic-lock="version">
+        <comment>Sector donde se ubica la mesa</comment>
+        <id name="id" type="java.lang.Short">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="empresa" class="entidades.Empresa" fetch="select">
+            <column name="idEmpresa" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="100" not-null="true" />
+        </property>
+        <set name="mesaNumeros" table="mesa_numero" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idSector" not-null="true">
+                    <comment>Sector donde se ubica la mesa</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.MesaNumero" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 31 oct. 2021 16:10:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.ComandaDetalle" table="comanda_detalle" catalog="food" optimistic-lock="version">
+        <comment>Detalle de productos de la comanda</comment>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="comanda" class="entidades.Comanda" fetch="select">
+            <column name="idComanda" not-null="true">
+                <comment>Id de la comanda</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="producto" class="entidades.Producto" fetch="select">
+            <column name="idProducto" not-null="true">
+                <comment>Id. del producto</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="unidadMedida" class="entidades.UnidadMedida" fetch="select">
+            <column name="idUnidad" not-null="true">
+                <comment>Unidad de medida</comment>
+            </column>
+        </many-to-one>
+        <property name="cantidad" type="big_decimal">
+            <column name="cantidad" precision="20" not-null="true">
+                <comment>Cantidad</comment>
+            </column>
+        </property>
+        <property name="observaciones" type="string">
+            <column name="observaciones" />
+        </property>
+    </class>
+</hibernate-mapping>

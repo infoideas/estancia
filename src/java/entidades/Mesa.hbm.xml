@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 31 oct. 2021 16:10:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.Mesa" table="mesa" catalog="food" optimistic-lock="version">
+        <comment>Mesa atendida</comment>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="empresa" class="entidades.Empresa" fetch="select">
+            <column name="idEmpresa" not-null="true">
+                <comment>Id. de la empresa</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="mesaNumero" class="entidades.MesaNumero" fetch="select">
+            <column name="idMesa" not-null="true" />
+        </many-to-one>
+        <many-to-one name="mozo" class="entidades.Mozo" fetch="select">
+            <column name="idMozo" not-null="true" />
+        </many-to-one>
+        <many-to-one name="persona" class="entidades.Persona" fetch="select">
+            <column name="idCliente">
+                <comment>Cliente</comment>
+            </column>
+        </many-to-one>
+        <property name="idUsuario" type="int">
+            <column name="idUsuario" not-null="true">
+                <comment>Usuario que abri&#243; la mesa</comment>
+            </column>
+        </property>
+        <property name="fecAper" type="timestamp">
+            <column name="fec_aper" length="19" not-null="true">
+                <comment>Fecha de apertura de la mesa</comment>
+            </column>
+        </property>
+        <property name="fecCierre" type="timestamp">
+            <column name="fec_cierre" length="19">
+                <comment>Fecha de cierre de la mesa</comment>
+            </column>
+        </property>
+        <property name="mayores" type="java.lang.Byte">
+            <column name="mayores" />
+        </property>
+        <property name="menores" type="java.lang.Byte">
+            <column name="menores" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="observaciones" />
+        </property>
+        <property name="estado" type="char">
+            <column name="estado" length="1" not-null="true">
+                <comment>Estado de la mesa: Abierta: A/Cerrada: C /Facturada: F</comment>
+            </column>
+        </property>
+        <property name="valorTotal" type="big_decimal">
+            <column name="valor_total" precision="20" not-null="true">
+                <comment>Valor total sin descuentos</comment>
+            </column>
+        </property>
+        <property name="porcDesc" type="big_decimal">
+            <column name="porc_desc" precision="10" not-null="true">
+                <comment>Porcentaje de descuento sobre el total de la mesa</comment>
+            </column>
+        </property>
+        <property name="valorDesc" type="big_decimal">
+            <column name="valor_desc" precision="20" not-null="true">
+                <comment>Valor de descuento sobre el total de la mesa</comment>
+            </column>
+        </property>
+        <property name="valorFinal" type="big_decimal">
+            <column name="valor_final" precision="20" not-null="true">
+                <comment>Valor final con descuentos</comment>
+            </column>
+        </property>
+        <set name="comandas" table="comanda" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idMesa" not-null="true">
+                    <comment>Mesa a la cual va la comanda</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.Comanda" />
+        </set>
+        <set name="mesaComprobantes" table="mesa_comprobante" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idMesa" not-null="true" />
+            </key>
+            <one-to-many class="entidades.MesaComprobante" />
+        </set>
+        <set name="mesaDets" table="mesa_det" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idMesa" not-null="true" />
+            </key>
+            <one-to-many class="entidades.MesaDet" />
+        </set>
+        <set name="mesaActuals" table="mesa_actual" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idMesaAtendida" not-null="true" />
+            </key>
+            <one-to-many class="entidades.MesaActual" />
+        </set>
+    </class>
+</hibernate-mapping>

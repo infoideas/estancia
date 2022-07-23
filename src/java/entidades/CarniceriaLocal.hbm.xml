@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/07/2020 15:25:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.CarniceriaLocal" table="carniceria_local" catalog="estancia" optimistic-lock="version">
+        <comment>Local o sucursal de la carnicer&#237;a</comment>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="carniceriaEmpresa" class="entidades.CarniceriaEmpresa" fetch="select">
+            <column name="idCliente" not-null="true">
+                <comment>Id de la carnicer&#237;a cliente</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="localidad" class="entidades.Localidad" fetch="select">
+            <column name="idLocalidad" />
+        </many-to-one>
+        <many-to-one name="provincia" class="entidades.Provincia" fetch="select">
+            <column name="idProvincia" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre">
+                <comment>Nombre de la sucursal o carnicer&#237;a</comment>
+            </column>
+        </property>
+        <property name="responsable" type="string">
+            <column name="responsable" length="100">
+                <comment>Responsable del local</comment>
+            </column>
+        </property>
+        <property name="direccion" type="string">
+            <column name="direccion" length="100" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="telefono" length="100" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="100" />
+        </property>
+        <property name="estado" type="java.lang.Character">
+            <column name="estado" length="1">
+                <comment>Estado: Activo: 1 /Inactivo: 0</comment>
+            </column>
+        </property>
+        <set name="movInventarios" table="mov_inventario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idLocal" not-null="true">
+                    <comment>Id del local o carnicer&#237;a del movimiento</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.MovInventario" />
+        </set>
+        <set name="ventas" table="venta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idLocal">
+                    <comment>Id de la carniceria donde se lleva los productos</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.Venta" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,106 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:em="http://java.sun.com/jsf/composite/componentes">
+    <body>
+    <ui:composition template="./../../Template04.xhtml">
+            <ui:define name="content">
+            <div style="align: center">
+            <h:form id="EditForm">
+                <p:tabView id="tabViewCab">
+                    <p:tab title="Entrega" >
+                    <p:panelGrid columns="2"  rendered="#{entregacontroller.registroMod != null}" style="background: white; width: 100%; border-width: thin; border-style: hidden">
+                        <p:outputLabel value="Entrega" for="numEntrega" style="font-size: 10pt; color: #045491"/>
+                        <h:outputText id="numEntrega" value="#{entregacontroller.registroMod.id}" style="float: right; font-size: 10pt; color: #045491; font-weight: bold"/>
+                        
+                        <p:outputLabel for="fecha" value="Fecha entrega" style="font-size: 10pt; color: #045491"/>
+                        <h:outputText id="fecha" value="#{entregacontroller.registroMod.fecEnt}" style="font-size: 10pt; color: #045491">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />                                                        
+                        </h:outputText>   
+                        
+                        <h:outputText value="Chofer:" style="font-size: 10pt; color: #045491"/>
+                        <h:outputText id="usuario" value="#{entregacontroller.obtenerNombreUsuario(entregacontroller.registroMod.idUsuarioEntrega)} " style="font-size: 10pt; color: #045491"/>
+
+                        <h:outputText value="Local:" style="font-size: 10pt; color: #045491"/>
+                        <h:outputText id="local" value="#{entregacontroller.registroMod.localCarniceria.nombreComercial} " style="font-size: 10pt; color: #045491"/>
+
+                        <h:outputText value="Cliente:" style="font-size: 10pt; color: #045491"/>
+                        <h:outputText id="cliente" value="#{entregacontroller.registroMod.localCarniceria.cliente.nombre} " style="font-size: 10pt; color: #045491"/>
+                        
+                        <p:outputLabel value="Kilos:" for="totalKilos" style="font-size: 10pt; color: #045491"/>
+                        <h:outputText id="totalKilos" value="#{entregacontroller.registroMod.totalKilos}" style="float: right; font-size: 10pt; color: #045491; font-weight: bold">
+                                <f:convertNumber pattern="#,##0.00" />                                                        
+                        </h:outputText>
+                        
+                        <p:outputLabel value="Valor flete:" for="valorFlete" style="font-size: 10pt; color: #045491"/>
+                        <h:outputText id="valorFlete" value="#{entregacontroller.registroMod.valorFlete}" style="float: right; font-size: 10pt; color: #045491; font-weight: bold">
+                                <f:convertNumber pattern="#,##0.00" />                                                        
+                        </h:outputText>                        
+                        
+                    </p:panelGrid>
+                    
+                    </p:tab>
+                    
+                    <p:tab title="Detalle de la entrega" id="tabDetalleGarron">
+                        <p:dataTable id="datosDetallesEntrega" 
+                                   paginatorPosition="top"
+                                   value="#{entregacontroller.registroMod.entregaDets}" 
+                                   var="item"
+                                   rowIndexVar="fila"
+                                   style="font-size: 10pt; color: #045491"
+                                   reflow="true"
+                                   rows="20"
+                                   paginator="true"
+                                   >
+                            
+                        <p:column style="width: 30%; font-size: 8pt; color: #045491; text-align: right"
+                                  >
+                            <f:facet name="header">
+                                <h:outputText value="Garrón"/>
+                            </f:facet>
+                            <h:outputText  value="#{item.inventarioTropa.tropaDetGarron.numGarron}">
+                                <f:convertNumber pattern="#,##0" />
+                            </h:outputText>
+                        </p:column>   
+                            
+                        <p:column style="width: 20%; font-size: 8pt; color: #045491;text-align: right"
+                                  >
+                            <f:facet name="header">
+                                <h:outputText value="Tipo"/>
+                            </f:facet>
+                            <h:outputText  value="#{item.tipo eq 'GD' ? 'Garrón derecho' : ( item.tipo eq 'GI' ? 'Garrón izquierdo' : ( item.tipo eq 'DE' ? 'Delantero' : 'Pierna' ) )}" />
+                        </p:column>                              
+                            
+                        <p:column style="width: 20%; font-size: 8pt; color: #045491;text-align: right"
+                                  >
+                            <f:facet name="header">
+                                <h:outputText value="Kilos"/>
+                            </f:facet>
+                            <h:outputText  value="#{item.kilos}">
+                                <f:convertNumber pattern="#,##0.00" />
+                            </h:outputText>
+                        </p:column>    
+                            
+                        <p:columnGroup type="footer">
+                            <p:row>
+                                <p:column colspan="3" style="text-align:right" footerText="Cantidad de registros: #{entregacontroller.registroMod.entregaDets.size()}"/>
+                            </p:row>
+                        </p:columnGroup>                                
+                            
+                        </p:dataTable>
+                    </p:tab>
+                </p:tabView>
+                
+                <br/>                    
+                <p:commandButton action="/vistas/entregas/Entregas" value="#{bundle.Cancel}" ajax="false" immediate="true" style="font-size: 10pt; color: #045491"/>                        
+
+            </h:form>
+                
+            </div>
+            </ui:define>
+    </ui:composition>
+
+    </body>
+</html>

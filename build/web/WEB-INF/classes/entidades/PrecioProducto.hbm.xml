@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 10/07/2021 10:15:58 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.PrecioProducto" table="precio_producto" catalog="estancia" optimistic-lock="version">
+        <comment>Precios de productos por fecha</comment>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="idProducto" type="int">
+            <column name="idProducto" not-null="true" />
+        </property>
+        <property name="fecIni" type="timestamp">
+            <column name="fec_ini" length="19" not-null="true" />
+        </property>
+        <property name="precioContado" type="big_decimal">
+            <column name="precio_contado" precision="20" not-null="true" />
+        </property>
+        <property name="precioLista" type="big_decimal">
+            <column name="precio_lista" precision="20" not-null="true" />
+        </property>
+        <property name="precioMayorista" type="big_decimal">
+            <column name="precio_mayorista" precision="20" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

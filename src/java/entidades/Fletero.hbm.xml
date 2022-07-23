@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16/12/2020 15:28:22 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.Fletero" table="fletero" catalog="estancia" optimistic-lock="version" lazy="false">
+        <id name="id" type="java.lang.Short">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="tipoid" class="entidades.Tipoid" fetch="select">
+            <column name="tipoId" />
+        </many-to-one>
+        <many-to-one name="usuarioAdmin" class="entidades.UsuarioAdmin" fetch="select">
+            <column name="idUsuario">
+                <comment>Id del usuario que usa el fletero</comment>
+            </column>
+        </many-to-one>
+        <property name="numId" type="string">
+            <column name="numId" length="30" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="nombre" not-null="true">
+                <comment>Apellido y nombre del fletero</comment>
+            </column>
+        </property>
+        <property name="estado" type="char">
+            <column name="estado" length="1" not-null="true" />
+        </property>
+        <set name="efectivoFletes" table="efectivo_flete" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idFletero" not-null="true">
+                    <comment>Fletero</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.EfectivoFlete" />
+        </set>
+        <set name="viajes" table="viaje" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idFletero" not-null="true">
+                    <comment>Chofer que carg&#243; el viaje</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.Viaje" />
+        </set>
+        <set name="liquidacionFletes" table="liquidacion_flete" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idFletero" not-null="true">
+                    <comment>Fletero al que se le liquida</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.LiquidacionFlete" />
+        </set>
+    </class>
+</hibernate-mapping>

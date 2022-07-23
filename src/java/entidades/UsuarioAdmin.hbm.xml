@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16/12/2020 15:28:22 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.UsuarioAdmin" table="usuario_admin" catalog="estancia" optimistic-lock="version" lazy="false">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="area" class="entidades.Area" fetch="select">
+            <column name="idArea">
+                <comment>Sector o &#225;rea del usuario</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="cargo" class="entidades.Cargo" fetch="select">
+            <column name="idCargo">
+                <comment>Cargo del usuario</comment>
+            </column>
+        </many-to-one>
+        <property name="nombreUsuario" type="string">
+            <column name="nombreUsuario" length="100" not-null="true" unique="true">
+                <comment>Nombre de usuario (Email)</comment>
+            </column>
+        </property>
+        <property name="clave" type="string">
+            <column name="clave" length="32" not-null="true">
+                <comment>Clave del usuario: encriptada en MD5</comment>
+            </column>
+        </property>
+        <property name="apellido" type="string">
+            <column name="apellido" length="50" not-null="true">
+                <comment>Apellido del usuario</comment>
+            </column>
+        </property>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" not-null="true">
+                <comment>Nombre del usuario</comment>
+            </column>
+        </property>
+        <property name="fecha" type="timestamp">
+            <column name="fecha" length="19" not-null="true">
+                <comment>Fecha de carga del usuario</comment>
+            </column>
+        </property>
+        <property name="tipo" type="char">
+            <column name="tipo" length="1" not-null="true">
+                <comment>Tipo de usuario: Administrador A / Usuario administrativo N</comment>
+            </column>
+        </property>
+        <property name="estado" type="char">
+            <column name="estado" length="1" not-null="true" />
+        </property>
+        <set name="efectivoFletes" table="efectivo_flete" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idUsuario" not-null="true">
+                    <comment>Usuario que carga el movimiento</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.EfectivoFlete" />
+        </set>
+        <set name="gastos" table="gasto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idUsuario" not-null="true">
+                    <comment>Usuario que carga el gasto</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.Gasto" />
+        </set>
+        <set name="tropas" table="tropa" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idUsuario" not-null="true">
+                    <comment>Id del usuario que carga la tropa</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.Tropa" />
+        </set>
+        <set name="movInventarios" table="mov_inventario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idUsuario" not-null="true">
+                    <comment>Id. del usuario que genero el movimiento</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.MovInventario" />
+        </set>
+        <set name="liquidacionFletes" table="liquidacion_flete" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idUsuario" not-null="true">
+                    <comment>Usuario que carga la liquidaci&#243;n</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.LiquidacionFlete" />
+        </set>
+        <set name="fleteros" table="fletero" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idUsuario">
+                    <comment>Id del usuario que usa el fletero</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.Fletero" />
+        </set>
+        <set name="entregasForIdUsuarioRecibe" table="entrega" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idUsuarioRecibe">
+                    <comment>Id. del usuario que recibe y aprueba el reparto</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.Entrega" />
+        </set>
+        <set name="entregasForIdUsuarioEntrega" table="entrega" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idUsuarioEntrega" not-null="true">
+                    <comment>Id. del usuario que hace la entrega</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.Entrega" />
+        </set>
+    </class>
+</hibernate-mapping>

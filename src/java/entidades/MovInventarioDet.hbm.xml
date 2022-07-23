@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 16/12/2020 15:28:22 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.MovInventarioDet" table="mov_inventario_det" catalog="estancia" optimistic-lock="version">
+        <comment>Detalle del movimiento de inventario</comment>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="movInventario" class="entidades.MovInventario" fetch="select">
+            <column name="idMov" not-null="true">
+                <comment>Id. del movimiento de inventario relacionado</comment>
+            </column>
+        </many-to-one>
+        <property name="idGarron" type="int">
+            <column name="idGarron" not-null="true">
+                <comment>Id. del garr&#243;n</comment>
+            </column>
+        </property>
+        <property name="tipo" type="char">
+            <column name="tipo" length="1" not-null="true">
+                <comment>Tipo: Garr&#243;n completo: G/ Pierna: P, Delantero: D</comment>
+            </column>
+        </property>
+        <property name="cantidad" type="big_decimal">
+            <column name="cantidad" precision="20" not-null="true">
+                <comment>Cantidad de kilos del garr&#243;n</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21 ene. 2022 15:27:08 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.ProductoPrecio" table="producto_precio" catalog="estancia" optimistic-lock="version">
+        <comment>Precio final de venta del producto por fecha</comment>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="producto" class="entidades.Producto" fetch="select">
+            <column name="idProducto" not-null="true">
+                <comment>Producto</comment>
+            </column>
+        </many-to-one>
+        <property name="fecIni" type="timestamp">
+            <column name="fec_ini" length="19" not-null="true">
+                <comment>Fecha de inicio</comment>
+            </column>
+        </property>
+        <property name="fecFin" type="timestamp">
+            <column name="fec_fin" length="19" not-null="true">
+                <comment>Fecha de fin</comment>
+            </column>
+        </property>
+        <property name="precio" type="big_decimal">
+            <column name="precio" precision="20" not-null="true">
+                <comment>Precio de venta</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

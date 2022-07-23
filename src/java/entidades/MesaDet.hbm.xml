@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 31 oct. 2021 16:10:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.MesaDet" table="mesa_det" catalog="food" optimistic-lock="version">
+        <comment>Detalle de la mesa atendida</comment>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="mesa" class="entidades.Mesa" fetch="select">
+            <column name="idMesa" not-null="true" />
+        </many-to-one>
+        <many-to-one name="preferencia" class="entidades.Preferencia" fetch="select">
+            <column name="idPreferencia">
+                <comment>Preferencia de preparaci&#243;n</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="producto" class="entidades.Producto" fetch="select">
+            <column name="idProducto" not-null="true" />
+        </many-to-one>
+        <many-to-one name="unidadMedida" class="entidades.UnidadMedida" fetch="select">
+            <column name="idUnidad" not-null="true">
+                <comment>Unidad de medida</comment>
+            </column>
+        </many-to-one>
+        <property name="idTipoComida" type="java.lang.Integer">
+            <column name="idTipoComida">
+                <comment>Tipo de comida: Bebida/Entrada/Principal/Postre/Combo o men&#250; especial</comment>
+            </column>
+        </property>
+        <property name="integraCombo" type="char">
+            <column name="integraCombo" length="1" not-null="true">
+                <comment>Indica si forma parte de un combo o men&#250; especial. En ese caso no debe llevar un precio</comment>
+            </column>
+        </property>
+        <property name="observacion" type="string">
+            <column name="observacion" length="100">
+                <comment>Observaci&#243;n sobre la preparaci&#243;n del producto</comment>
+            </column>
+        </property>
+        <property name="cantidad" type="big_decimal">
+            <column name="cantidad" precision="20" not-null="true" />
+        </property>
+        <property name="precioUnitario" type="big_decimal">
+            <column name="precio_unitario" precision="20" not-null="true">
+                <comment>Precio unitario del producto</comment>
+            </column>
+        </property>
+        <property name="valorAdicional" type="big_decimal">
+            <column name="valor_adicional" precision="20" not-null="true">
+                <comment>Valor de los adicionales del producto</comment>
+            </column>
+        </property>
+        <property name="precioTotal" type="big_decimal">
+            <column name="precio_total" precision="20" not-null="true">
+                <comment>Precio total: (precio_unitario + valor_adicional)*cantidad</comment>
+            </column>
+        </property>
+        <property name="estado" type="char">
+            <column name="estado" length="1" not-null="true">
+                <comment>Estado: Pendiente: P/Adicionado: A/Devuelto: D/Eliminado: E</comment>
+            </column>
+        </property>
+        <property name="idComanda" type="int">
+            <column name="idComanda" not-null="true">
+                <comment>Comanda en que fue pedido</comment>
+            </column>
+        </property>
+        <property name="horaPedido" type="timestamp">
+            <column name="hora_pedido" length="19" not-null="true">
+                <comment>Fecha y hora en que se envi&#243; la comanda o pedido</comment>
+            </column>
+        </property>
+        <property name="horaEnvio" type="timestamp">
+            <column name="hora_envio" length="19">
+                <comment>Fecha y hora en que se env&#237;a a la mesa</comment>
+            </column>
+        </property>
+        <set name="mesaDetAdicionals" table="mesa_det_adicional" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idMesaDet" not-null="true" />
+            </key>
+            <one-to-many class="entidades.MesaDetAdicional" />
+        </set>
+        <set name="mesaDetPreferencias" table="mesa_det_preferencia" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idMesaDet" not-null="true" />
+            </key>
+            <one-to-many class="entidades.MesaDetPreferencia" />
+        </set>
+    </class>
+</hibernate-mapping>

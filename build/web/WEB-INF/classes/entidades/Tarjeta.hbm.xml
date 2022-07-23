@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 31 oct. 2021 16:10:04 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="entidades.Tarjeta" table="tarjeta" catalog="food" optimistic-lock="version">
+        <comment>Tarjetas de cr&#233;dito y/o d&#233;bito</comment>
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="empresa" class="entidades.Empresa" fetch="select">
+            <column name="idEmpresa" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" not-null="true" />
+        </property>
+        <set name="ventaCuentas" table="venta_cuenta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idTarjeta">
+                    <comment>Tarjeta de cr&#233;dito o d&#233;bito</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.VentaCuenta" />
+        </set>
+        <set name="mesaComprobantes" table="mesa_comprobante" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idTarjeta">
+                    <comment>Tarjeta</comment>
+                </column>
+            </key>
+            <one-to-many class="entidades.MesaComprobante" />
+        </set>
+    </class>
+</hibernate-mapping>
